@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Script Trainer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="language">
+    <main class="app">
+      <section class="selection-screen" aria-label="Language selection">
+        <header class="mode-header">
+          <h1>Snake Script Trainer</h1>
+          <p class="subtitle">Choose a language to load its characters and audio.</p>
+        </header>
+
+        <div class="mode-actions language-actions">
+          <button class="mode-button" data-language="ja" type="button">Japanese</button>
+          <button class="mode-button" data-language="ta" type="button">Tamil</button>
+          <button class="mode-button" data-language="hi" type="button">Hindi</button>
+        </div>
+
+        <p class="mode-copy">
+          Each language uses the same snake gameplay, but swaps in its own character set and
+          spoken prompts.
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

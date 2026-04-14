@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Logic Tests</title>
+    <style>
+      body {
+        font-family: monospace;
+        margin: 24px;
+        background: #faf7f0;
+        color: #2f2a24;
+      }
+
+      .pass {
+        color: #215a30;
+      }
+
+      .fail {
+        color: #8b2f1d;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Snake Logic Tests</h1>
+    <pre id="results"></pre>
+
+    <script type="module">
+      import {
+        createInitialState,
+        createFoodPosition,
+        queueDirection,
+        stepGame,
+      } from "./snake-logic.js";
+
+      const results = document.querySelector("#results");
+      const lines = [];
+
+      function assert(name, condition) {
+        if (!condition) {
+          throw new Error(name);
+        }
+        lines.push("PASS " + name);
+      }
+
+      function run() {
+        const moved = stepGame(
+          {
+            ...createInitialState({
+              width: 6,
+              height: 6,
+              snake: [
+                { x: 2, y: 2 },
+                { x: 1, y: 2 },
+                { x: 0, y: 2 },
+              ],
+              food: { x: 5, y: 5 },
+              status: "running",
+            }),
+          },
+          0
+        );
+        assert("snake moves one cell in current direction", moved.snake[0].x === 3 && moved.snake[0].y === 2);
+        assert("score does not change without eating", moved.score === 0);
+
+        const grown = stepGame(
+          {
+            ...createInitialState({
+              width: 6,
+              height: 6,
+              snake: [
+                { x: 2, y: 2 },
+                { x: 1, y: 2 },
+                { x: 0, y: 2 },
+              ],
+              food: { x: 3, y: 2 },
+              status: "running",
+            }),
+          },
+          0
+        );
+        assert("snake grows after eating", grown.snake.length === 4);
+        assert("score increments after eating", grown.score === 1);
+
+        const reversed = queueDirection(
+          createInitialState({
+            snake: [
+              { x: 2, y: 2 },
+              { x: 1, y: 2 },
+            ],
+            direction: "right",
+          }),
+          "left"
+        );
+        assert("reverse direction is ignored", reversed.queuedDirection === "right");
+
+        const wallCollision = stepGame(
+          {
+            ...createInitialState({
+              width: 4,
+              height: 4,
+              snake: [{ x: 3, y: 1 }],
+              direction: "right",
+              queuedDirection: "right",
+              food: { x: 0, y: 0 },
+              status: "running",
+            }),
+          },
+          0
+        );
+        assert("wall collision ends the game", wallCollision.status === "game-over");
+
+        const selfCollision = stepGame(
+          {
+            ...createInitialState({
+              width: 6,
+              height: 6,
+              snake: [
+                { x: 2, y: 2 },
+                { x: 2, y: 3 },
+                { x: 1, y: 3 },
+                { x: 1, y: 2 },
+              ],
+              direction: "down",
+              queuedDirection: "left",
+              food: { x: 5, y: 5 },
+              status: "running",
+            }),
+          },
+          0
+        );
+        assert("self collision ends the game", selfCollision.status === "game-over");
+
+        const food = createFoodPosition(
+          3,
+          3,
+          [
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+            { x: 0, y: 1 },
+          ],
+          0
+        );
+        assert("food placement avoids snake cells", !(food.x === 0 && food.y === 0));
+      }
+
+      try {
+        run();
+        results.className = "pass";
+      } catch (error) {
+        lines.push("FAIL " + error.message);
+        results.className = "fail";
+      }
+
+      results.textContent = lines.join("\n");
+    </script>
+  </body>
+</html>

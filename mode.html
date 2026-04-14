@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Mode Selection</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="mode">
+    <main class="app">
+      <section class="selection-screen" aria-label="Mode selection">
+        <header class="mode-header">
+          <h1 id="mode-title">Snake Trainer</h1>
+          <p class="subtitle">Choose a mode to start the game.</p>
+        </header>
+
+        <div class="mode-actions">
+          <button class="mode-button" data-mode="basic" type="button">Basic</button>
+          <button class="mode-button" data-mode="advanced" type="button">Advanced</button>
+        </div>
+
+        <p class="mode-copy">
+          <span id="mode-copy-basic">Basic: one character food block at a time.</span>
+          <span id="mode-copy-advanced">
+            Advanced: hear one target sound, then collect only the matching character.
+          </span>
+        </p>
+
+        <button id="back-to-language" class="secondary-button" type="button">Back</button>
+      </section>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

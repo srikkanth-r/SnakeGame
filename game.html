@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="game">
+    <main class="app">
+      <section class="game-panel" aria-label="Snake game">
+        <div class="game-content">
+          <header class="game-header">
+            <div>
+              <h1>Snake</h1>
+              <p id="mode-subtitle" class="subtitle">Classic grid movement with simple controls.</p>
+            </div>
+            <div class="scoreboard" aria-live="polite">
+              <span>Score</span>
+              <strong id="score">0</strong>
+            </div>
+          </header>
+
+          <div class="status-row">
+            <p id="status">Press Start to play.</p>
+            <div class="actions">
+              <button id="start-button" type="button">Start</button>
+              <button id="pause-button" type="button">Pause</button>
+              <button id="restart-button" type="button">Restart</button>
+            </div>
+          </div>
+
+          <div
+            id="game-board"
+            class="board"
+            role="grid"
+            aria-label="Snake board"
+          ></div>
+
+          <div id="character-display" class="character-display" aria-live="polite">
+            <span id="character-label" class="character-label">Last character</span>
+            <strong id="character-symbol" class="character-symbol">-</strong>
+            <span id="character-translation" class="character-translation">
+              Hit a character block to see its sound.
+            </span>
+          </div>
+
+          <div class="controls" aria-label="Touch controls">
+            <button class="control-button" data-direction="up" type="button">Up</button>
+            <div class="control-row">
+              <button class="control-button" data-direction="left" type="button">Left</button>
+              <button class="control-button" data-direction="down" type="button">Down</button>
+              <button class="control-button" data-direction="right" type="button">Right</button>
+            </div>
+          </div>
+
+          <p class="help">
+            Use arrow keys or WASD to move. Press Enter to start. Press Space to pause or resume.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
